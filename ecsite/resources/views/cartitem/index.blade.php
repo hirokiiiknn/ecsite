@@ -46,6 +46,11 @@
                     <div class="card-body">
                         {{ $subtotal }}円
                     </div>
+                    <div>
+                        <a class="btn btn-primary" href="/buy" role="button">
+                            レジに進む
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

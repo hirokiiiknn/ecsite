@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+    @if(Session::has('flash_message'))
+        <div class="alert alert-success">
+            {{ session('flash_message')}}
+        </div>
+    @endif
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -13,8 +18,21 @@
                             <div>
                                 {{ $cartitem->amount }}円
                             </div>
-                            <div>
-                                {{ $cartitem->quantity }}個
+                            <div class="form-inline">
+                                <!-- コントローラー側でIDに対応したカート情報のモデルを受け取るようにするため、カートデータのIDをパスに付与 -->
+                                <form method="POST" action="/cartitem/{{$cartitem->id}}">
+                                    <!-- PUTで送信 -->
+                                    @method('PUT')
+                                    @csrf
+                                    <input type="text" class="form-control" name = "quantity" value="{{$cartitem->quantity}}">
+                                    個
+                                    <button type = "submit" class="btn btn-primary">更新</button>
+                                </form>
+                                <form method="POST" action="/cartitem/{{ $cartitem->id }}">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button type="submit" class="btn btn-primary ml-1">カートから削除する</button>
+                                </form>
                             </div>
                         </div>
                     @endforeach

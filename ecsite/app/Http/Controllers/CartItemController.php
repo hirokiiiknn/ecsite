@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\CartItem;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth; // 追加
+use Illuminate\Support\Facades\Auth; 
 
 class CartItemController extends Controller
 {
@@ -89,7 +89,9 @@ class CartItemController extends Controller
      */
     public function update(Request $request, CartItem $cartItem)
     {
-        //
+        $cartItem->quantity = $request->post('quantity');
+        $cartItem->save();
+        return redirect('cartitem')->with('flash_message', 'カートを更新しました');
     }
 
     /**
@@ -100,6 +102,7 @@ class CartItemController extends Controller
      */
     public function destroy(CartItem $cartItem)
     {
-        //
+        $cartItem->delete();
+        return redirect('cartitem')->with('flash_message', 'カートから削除しました');
     }
 }
